@@ -8,7 +8,7 @@ CAMERA_INDEX = 0
 CONF_THRESHOLD = 0.5
 
 REAL_OBJECT_HEIGHT_CM = 7.0
-FOCAL_LENGTH_PIXELS = 1366.0
+FOCAL_LENGTH_PIXELS = 1400.0
 # ============================================
 
 model = YOLO(MODEL_PATH)
