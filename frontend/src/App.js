@@ -1,7 +1,9 @@
 import React, { useState, useRef, useCallback } from 'react';
 import axios from 'axios';
 import Webcam from 'react-webcam';
-import { Upload, Camera, Image as ImageIcon, Sparkles, AlertCircle, CheckCircle } from 'lucide-react';
+import { Upload, Camera, Image as ImageIcon, Sparkles, AlertCircle, CheckCircle, BookOpen } from 'lucide-react';
+import CulturalNote from './components/CulturalNote';
+import ExploreTab from './components/ExploreTab';
 import './App.css';
 
 const API_URL = 'http://localhost:5000/api';
@@ -15,6 +17,7 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [webcamActive, setWebcamActive] = useState(false);
+  const [showCulturalNote, setShowCulturalNote] = useState(false);
   const webcamRef = useRef(null);
 
   const handleFileChange = (e) => {
@@ -47,6 +50,9 @@ function App() {
 
       setResultImage(response.data.image);
       setDetections(response.data.detections);
+      if (response.data.detections.length > 0) {
+        setShowCulturalNote(true);
+      }
     } catch (err) {
       setError(err.response?.data?.error || 'Detection failed');
     } finally {
@@ -70,6 +76,9 @@ function App() {
 
       setResultImage(response.data.image);
       setDetections(response.data.detections);
+      if (response.data.detections.length > 0) {
+        setShowCulturalNote(true);
+      }
     } catch (err) {
       setError(err.response?.data?.error || 'Detection failed');
     } finally {
@@ -115,6 +124,17 @@ function App() {
             >
               <Camera className="w-5 h-5" />
               Webcam
+            </button>
+            <button
+              onClick={() => setActiveTab('explore')}
+              className={`flex-1 py-4 px-6 font-semibold transition-all flex items-center justify-center gap-2 ${
+                activeTab === 'explore'
+                  ? 'bg-purple-600 text-white'
+                  : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
+              }`}
+            >
+              <BookOpen className="w-5 h-5" />
+              Explore
             </button>
           </div>
 
@@ -215,6 +235,10 @@ function App() {
               </div>
             )}
 
+            {activeTab === 'explore' && (
+              <ExploreTab />
+            )}
+
             {error && (
               <div className="mt-6 bg-red-50 border border-red-200 rounded-lg p-4 flex items-start gap-3">
                 <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
@@ -251,6 +275,11 @@ function App() {
           <p>Powered by YOLOv8 • Built with React & Flask</p>
         </div>
       </div>
+
+      <CulturalNote 
+        show={showCulturalNote} 
+        onClose={() => setShowCulturalNote(false)} 
+      />
     </div>
   );
 }
