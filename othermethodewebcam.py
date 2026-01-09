@@ -7,7 +7,7 @@ MODEL_PATH = "best.pt"
 CAMERA_INDEX = 0
 CONF_THRESHOLD = 0.5
 
-REAL_OBJECT_HEIGHT_CM = 7.0
+REAL_OBJECT_HEIGHT_CM = 12.0
 FOCAL_LENGTH_PIXELS = 1400.0
 # ============================================
 
@@ -59,7 +59,7 @@ while True:
                 2
             )
 
-            label = f"toy_car {conf:.2f} | {distance_cm:.1f} cm"
+            label = f"zlij {conf:.2f} | {distance_cm:.1f} cm"
 
             cv2.putText(
                 frame,
@@ -71,7 +71,7 @@ while True:
                 2
             )
 
-    cv2.imshow("Toy Car Detection + Distance (C920)", frame)
+    cv2.imshow("zlij Detection + Distance (C920)", frame)
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
